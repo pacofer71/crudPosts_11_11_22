@@ -1,0 +1,20 @@
+{
+    "name": "pacofer71/pdo2",
+    "description": "Segundo ejemplo pdo",
+    "type": "project",
+    "license": "gnu/gpl",
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "pacofer71"
+        }
+    ],
+    "require": {
+        "vlucas/phpdotenv": "^5.5",
+        "fakerphp/faker": "^1.20"
+    }
+}
