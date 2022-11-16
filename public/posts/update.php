@@ -5,6 +5,7 @@ if (!isset($_SESSION['user']) || !isset($_GET['id'])) {
     die();
 }
 require __DIR__ . "/../../vendor/autoload.php";
+include __DIR__."/../../layouts/navbar.php";
 
 use App\{Users, Posts};
 
@@ -75,6 +76,9 @@ else{
 </head>
 
 <body style="background-color:cadetblue">
+<?php
+    pintarMenu(1);
+?>
     <div class="container mx-auto">
         <form method="POST" action="<?php echo $_SERVER['PHP_SELF']."?id={$post->id}"; ?>" class="py-4 mt-4 px-4 bg-dark text-light rounded mx-auto" style="width:50rem">
             <div class="mb-3">

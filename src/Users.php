@@ -33,12 +33,40 @@ class Users extends Conexion{
         
 
     }
-    public function read(){
+    public static function read(string $nombre){
+        parent::crearConexion();
+        $q="select * from users where nombre=:n";
+        $stmt=parent::$conexion->prepare($q);
+        try{
+            $stmt->execute([
+                ':n'=>$nombre
+               
+            ]);
+        }catch(PDOException $ex){
+            die("Error en leer usuario: ".$ex->getMessage());
+        }
+        parent::$conexion=null;
+        return $stmt->fetch(PDO::FETCH_OBJ);
 
     }
     public function update($id){
+        $q="update users set nombre=:n, email=:e, logo=:l, pass=:p where id=:i";
+        $stmt=parent::$conexion->prepare($q);
+        try{
+            $stmt->execute([
+                ':n'=>$this->nombre,
+                ':e'=>$this->email,
+                ':p'=>$this->pass,
+                ':l'=>$this->logo,
+                ':i'=>$id
+            ]);
+        }catch(PDOException $ex){
+            die("Error en update: ".$ex->getMessage());
+        }
+        parent::$conexion=null;
 
     }
+    
     public function delete($id){
 
     }
@@ -116,12 +144,17 @@ class Users extends Conexion{
         parent::$conexion=null;
         return $stmt->fetch(PDO::FETCH_OBJ)->id;
     }
-    public static function existeCampo($nombreCampo, $valorCampo){
+    public static function existeCampo($nombreCampo, $valorCampo, ?int $id=null){
         parent::crearConexion();
-        $q="select id from users where $nombreCampo=:n";
+        
+        $q=($id==null) ? "select id from users where $nombreCampo=:n" :
+        "select id from users where $nombreCampo=:n AND id!=:i";
+        
+        $opciones=($id==null) ? [':n'=>$valorCampo] : [':n'=>$valorCampo, ':i'=>$id]; 
+        
         $stmt=parent::$conexion->prepare($q);
         try{
-            $stmt->execute([':n'=>$valorCampo]);
+            $stmt->execute($opciones);
         }catch(PDOException $ex){
             die("error en comprobar si existe campo: ".$ex->getMessage());
         }

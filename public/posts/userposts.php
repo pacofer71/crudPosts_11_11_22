@@ -5,6 +5,7 @@ if(!isset($_SESSION['user'])){
     die();
 }
 require __DIR__ . "/../../vendor/autoload.php";
+include __DIR__."/../../layouts/navbar.php";
 
 use App\{Users, Posts};
 
@@ -31,6 +32,9 @@ $posts = (new Posts)->read($nombre);
 </head>
 
 <body style="background-color:cadetblue">
+<?php
+    pintarMenu(1);
+?>
     <div class="container mx-auto">
         <h5 class="text-center my-4">Posts de: <?php echo $nombre ?></h5>
         <a href="crearPost.php" class="btn btn-primary my-2"><i class="fas fa-add"></i> Crear Post</a>
