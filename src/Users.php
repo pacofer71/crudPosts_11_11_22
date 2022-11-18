@@ -78,7 +78,7 @@ class Users extends Conexion{
         for($i=0; $i<$cant; $i++){
             (new Users)->setNombre($faker->unique()->userName)
             ->setEmail($faker->unique->email)
-            ->setPass(password_hash("secret0", PASSWORD_DEFAULT))
+            ->setPass("secret0")
             ->create();
         }
 
